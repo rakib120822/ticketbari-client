@@ -5,4 +5,10 @@
 @plugin "daisyui/theme" {
   name: "light";
   default: true; /* set as default */
+  --color-primary: #0EA5E9;
+}
+
+a.active {
+  color: #0EA5E9;
+  text-decoration: underline;
 }
