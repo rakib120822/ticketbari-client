@@ -10,6 +10,7 @@ import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import DetailsPage from "../pages/detailPage/DetailsPage";
 import BeAVendor from "../pages/be-a-vendor/BeAVendor";
+import AddTicket from "../pages/addTicket/AddTicket";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "contact-us",
         element: <ContactUs />,
+      },
+      {
+        path: "add-ticket",
+        element: <AddTicket />,
       },
       {
         path: "details/:id",

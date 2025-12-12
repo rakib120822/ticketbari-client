@@ -31,7 +31,7 @@ const Footer = () => {
           <a className="link link-hover">Stripe</a>
           <div className="flex gap-2">
             <a className="flex items-center">
-              <FaXTwitter size={20}/>
+              <FaXTwitter size={20} />
             </a>
             <a>
               <svg

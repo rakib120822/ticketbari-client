@@ -1,8 +1,12 @@
 import React from "react";
 import { Link, NavLink } from "react-router";
+import useAuth from "../hook/useAuth";
+import { toast } from "react-toastify";
+import Loader from "../component/spinner/Loader";
 
 const Navbar = () => {
-  const user = false;
+  const { user, logOut, loading, setLoading, setUser } = useAuth();
+  console.log(user);
   const links = (
     <>
       <li>
@@ -10,6 +14,9 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink to={"/all-tickets"}>All Tickets</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/add-ticket"}>Add Ticket</NavLink>
       </li>
       <li>
         <NavLink to={"/dashboard"}>Dashboard</NavLink>
@@ -25,6 +32,14 @@ const Navbar = () => {
       </li>
     </>
   );
+  const handleLogOut = () => {
+    setLoading(true);
+    logOut().then(() => {
+      toast.info("Successfully Log Out");
+      setUser(null);
+      setLoading(false);
+    });
+  };
   return (
     <nav className="navbar  shadow-sm sticky top-0 backdrop-blur-2xl px-10 z-500">
       <div className="navbar-start">
@@ -71,7 +86,9 @@ const Navbar = () => {
         <ul className="flex gap-5 items-center px-1">{links}</ul>
       </div>
       <div className="navbar-end gap-4">
-        {user ? (
+        {loading ? (
+          <Loader />
+        ) : user ? (
           <>
             <div className="dropdown dropdown-end">
               <div
@@ -82,7 +99,7 @@ const Navbar = () => {
                 <div className="w-10 rounded-full">
                   <img
                     alt="Tailwind CSS Navbar component"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    src={user?.photoURL}
                   />
                 </div>
               </div>
@@ -100,7 +117,7 @@ const Navbar = () => {
                   <a>Settings</a>
                 </li>
                 <li>
-                  <a>Logout</a>
+                  <a onClick={handleLogOut}>Logout</a>
                 </li>
               </ul>
             </div>

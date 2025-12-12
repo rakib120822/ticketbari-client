@@ -1,7 +1,41 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router";
+import useAuth from "../../hook/useAuth";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { registerUser, updateProfileInfo, setLoading, setUser } = useAuth();
+
+  const handleFormSubmit = (data) => {
+    const { name, email, password, photoUrl } = data;
+    const profileImg = photoUrl[0];
+
+    setLoading(true);
+    registerUser(email, password)
+      .then((result) => {
+        const formData = new FormData();
+        formData.append("image", profileImg);
+        const imageURL = `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_Image_Key
+        }`;
+        axios.post(imageURL, formData).then((res) => {
+          const url = res.data.data.display_url;
+          updateProfileInfo(name, url).then(() => {
+            setUser({ ...result.user });
+            setLoading(false);
+            toast.info("Register Done");
+          });
+        });
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-10">
       <div className="max-w-md w-full p-8 bg-white rounded shadow">
@@ -10,7 +44,7 @@ const Register = () => {
         </h2>
 
         {/* Registration Form */}
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
           {/* Name */}
           <div>
             <label className="block text-gray-700 mb-2">Name</label>
@@ -19,20 +53,26 @@ const Register = () => {
               name="name"
               placeholder="Your Name"
               className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              {...register("name", { required: true })}
             />
+            {errors.name?.type === "required" && (
+              <p className="text-red-500">Name is required</p>
+            )}
           </div>
 
           {/* Email */}
           <div>
             <label className="block text-gray-700 mb-2">Email</label>
             <input
-              type="email"
+              type="text"
               name="email"
               placeholder="you@example.com"
               className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              {...register("email", { required: true })}
             />
+            {errors.email?.type === "required" && (
+              <p className="text-red-500">Email is required</p>
+            )}
           </div>
 
           {/* Password */}
@@ -43,16 +83,39 @@ const Register = () => {
               name="password"
               placeholder="********"
               className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              {...register("password", {
+                required: true,
+                minLength: 6,
+                pattern:
+                  /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{6,}$/,
+              })}
             />
+            {errors.password?.type === "required" && (
+              <p className="text-red-500">Password is required</p>
+            )}
+            {errors.password?.type === "minLength" && (
+              <p className="text-red-500">Password must be 6 character</p>
+            )}
+            {errors.password?.type === "pattern" && (
+              <p className="text-red-500">
+                Password must have atleast one capital letter,one small letter
+                ,one number and on special character
+              </p>
+            )}
           </div>
 
           {/* Image Upload */}
           <div>
             <fieldset className="fieldset">
               <legend className="fieldset-legend">Pick a file</legend>
-              <input type="file" className="file-input w-full" />
-              <label className="label">Max size 2MB</label>
+              <input
+                type="file"
+                className="file-input w-full"
+                {...register("photoUrl", { required: true })}
+              />
+              {errors.photoUrl?.type === "required" && (
+                <p className="text-red-500">Photo is required</p>
+              )}
             </fieldset>
           </div>
 
