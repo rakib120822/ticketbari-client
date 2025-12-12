@@ -6,7 +6,7 @@ const AllTicket = () => {
   const AllTickets = useLoaderData();
   return (
     <div className="px-10">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col mb-5 md:mb-0 md:flex-row justify-between items-center">
         <h1 className="text-4xl font-bold my-10 text-center">
           All <span className="text-primary">Tickets</span>
         </h1>

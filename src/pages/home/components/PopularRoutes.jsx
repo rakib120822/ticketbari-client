@@ -19,7 +19,8 @@ const PopularRoutes = ({ LatestSectionData }) => {
                 {route.from} → {route.to}
               </p>
               <p>
-                {route.transportType} • ${route.price}
+                •{route.transportType}
+                {"   "}${route.price}
                 <br></br>• {route.departureDateTime.split("T")[1]}
                 <br></br>• {route.departureDateTime.split("T")[0]}
               </p>

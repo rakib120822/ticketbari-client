@@ -107,10 +107,10 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <Link to={"/auth/register"} className="btn">
+            <Link to={"/auth/register"} className="btn btn-primary btn-outline">
               Sign Up
             </Link>
-            <Link to={"/auth/login"} className="btn">
+            <Link to={"/auth/login"} className="btn btn-primary ">
               Sign In
             </Link>
           </>

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const AboutUs = () => {
   const [learnMore, setLearnMore] = useState(false);
   return (
-    <section className="py-16 bg-gray-50 px-10">
+    <section className="py-16  px-10">
       <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center gap-8">
         {/* Image */}
         <div className="flex-1">
@@ -61,7 +61,7 @@ const AboutUs = () => {
 
           <button
             onClick={() => setLearnMore(!learnMore)}
-            className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition"
+            className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition"
           >
             {learnMore ? "See Less" : "Learn More"}
           </button>
