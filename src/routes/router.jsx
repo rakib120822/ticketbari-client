@@ -9,6 +9,7 @@ import DashboardLayout from "../layouts/dashboardlayout/DashboardLayout";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import DetailsPage from "../pages/detailPage/DetailsPage";
+import BeAVendor from "../pages/be-a-vendor/BeAVendor";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "about-us",
         element: <AboutUs />,
+      },
+      {
+        path: "/be-a-vendor",
+        element: <BeAVendor />,
       },
       {
         path: "contact-us",
