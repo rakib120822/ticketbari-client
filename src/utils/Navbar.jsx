@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
-  const user = true;
+  const user = false;
   const links = (
     <>
       <li>
@@ -107,7 +107,12 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <button className="btn">Sign In</button>
+            <Link to={"/auth/register"} className="btn">
+              Sign Up
+            </Link>
+            <Link to={"/auth/login"} className="btn">
+              Sign In
+            </Link>
           </>
         )}
       </div>
