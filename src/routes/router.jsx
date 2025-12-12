@@ -11,6 +11,7 @@ import Register from "../pages/auth/Register";
 import DetailsPage from "../pages/detailPage/DetailsPage";
 import BeAVendor from "../pages/be-a-vendor/BeAVendor";
 import AddTicket from "../pages/addTicket/AddTicket";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,11 @@ const router = createBrowserRouter([
       },
       {
         path: "all-tickets",
-        element: <AllTicket />,
+        element: (
+          <PrivateRoutes>
+            <AllTicket />
+          </PrivateRoutes>
+        ),
         loader: () => fetch("/data.json"),
       },
       {
@@ -33,7 +38,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/be-a-vendor",
-        element: <BeAVendor />,
+        element: (
+          <PrivateRoutes>
+            <BeAVendor />
+          </PrivateRoutes>
+        ),
       },
       {
         path: "contact-us",
@@ -66,7 +75,11 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoutes>
+        <DashboardLayout />
+      </PrivateRoutes>
+    ),
   },
 ]);
 

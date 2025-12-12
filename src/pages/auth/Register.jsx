@@ -29,12 +29,13 @@ const Register = () => {
           const url = res.data.data.display_url;
           updateProfileInfo(name, url).then(() => {
             setUser({ ...result.user });
-            setLoading(false);
+
             toast.info("Register Done");
           });
         });
       })
       .catch((err) => console.log(err));
+    setLoading(false);
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-10">

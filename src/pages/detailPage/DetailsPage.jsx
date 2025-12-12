@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useLoaderData, useParams } from "react-router";
+import { toast } from "react-toastify";
 
 const DetailsPage = () => {
   const data = useLoaderData(); // array of tickets
   const { id } = useParams();
   const [ticket, setTicket] = useState(null);
-
+  const handleBook = () => {
+    toast.info("booking successful");
+  };
   useEffect(() => {
     // Find the ticket with matching id
     const detailTicket = data.find((d) => d.id === parseInt(id));
@@ -41,13 +44,21 @@ const DetailsPage = () => {
       <p className="text-gray-700 mb-1">
         <strong>Quantity Available:</strong> {ticket.ticketQuantity}
       </p>
-      <p className="text-gray-700 mb-1">
-        <strong>Perks:</strong> {ticket.perks}
-      </p>
-      <p className="text-gray-700 mb-1">
-        <strong>Departure:</strong>{" "}
-        {new Date(ticket.departureDateTime).toLocaleString()}
-      </p>
+
+      <div className="flex justify-between items-center">
+        <div>
+          <p className="text-gray-700 mb-1">
+            <strong>Perks:</strong> {ticket.perks}
+          </p>
+          <p className="text-gray-700 mb-1">
+            <strong>Departure:</strong>{" "}
+            {new Date(ticket.departureDateTime).toLocaleString()}
+          </p>
+        </div>
+        <button onClick={handleBook} className="btn btn-primary">
+          Book Now
+        </button>
+      </div>
     </div>
   );
 };

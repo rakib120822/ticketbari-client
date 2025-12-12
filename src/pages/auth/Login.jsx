@@ -1,7 +1,31 @@
 import React from "react";
-import { Link } from "react-router";
+import { useForm } from "react-hook-form";
+import { Link, useLocation, useNavigate } from "react-router";
+import useAuth from "../../hook/useAuth";
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { logIn, setUser, setLoading } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location);
+
+  const handleLogin = (data) => {
+    console.log(data);
+    setLoading(true);
+    logIn(data.email, data.password).then((res) => {
+      setUser(res.user);
+      setLoading(false);
+      toast.info("Successfully Logged In");
+      navigate(`${location?.state || "/"}`);
+    });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-10">
       <div className="max-w-md w-full p-8 bg-white rounded shadow">
@@ -10,7 +34,7 @@ const Login = () => {
         </h2>
 
         {/* Login Form */}
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit(handleLogin)} className="space-y-4">
           <div>
             <label className="block text-gray-700 mb-2">Email</label>
             <input
@@ -18,8 +42,11 @@ const Login = () => {
               name="email"
               placeholder="you@example.com"
               className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              {...register("email", { required: true })}
             />
+            {errors.email?.type === "required" && (
+              <p className="text-red-500">Email is required</p>
+            )}
           </div>
 
           <div>
@@ -29,8 +56,14 @@ const Login = () => {
               name="password"
               placeholder="********"
               className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
+              {...register("password", { required: true, minLength: 6 })}
             />
+            {errors.password?.type === "required" && (
+              <p className="text-red-500">Password is required</p>
+            )}
+            {errors.password?.type === "minLength" && (
+              <p className="text-red-500">Password must be 6 character</p>
+            )}
           </div>
 
           <div className="flex justify-between text-sm ">
