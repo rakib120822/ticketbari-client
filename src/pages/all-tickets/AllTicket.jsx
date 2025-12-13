@@ -3,7 +3,6 @@ import LatestCard from "../../component/card/LatestCard";
 import useAxiosSecure from "../../hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { set } from "react-hook-form";
 
 const AllTicket = () => {
   const axiosSecure = useAxiosSecure();

@@ -45,7 +45,6 @@ const router = createBrowserRouter([
             <DetailsPage />
           </PrivateRoutes>
         ),
-        loader: () => fetch("/data.json"),
       },
     ],
   },

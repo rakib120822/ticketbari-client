@@ -16,7 +16,7 @@ const LatestCard = ({ data }) => {
         <p>{data?.perks}</p>
 
         <div className="card-actions justify-center">
-          <Link to={`/details/${data.id}`} className="btn btn-primary">
+          <Link to={`/details/${data._id}`} className="btn btn-primary">
             See Details
           </Link>
         </div>

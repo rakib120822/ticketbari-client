@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { useLoaderData, useParams } from "react-router";
+import { useParams } from "react-router";
 import { toast } from "react-toastify";
+import useAxiosSecure from "../../hook/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Loader from "../../component/spinner/Loader";
 
 const DetailsPage = () => {
-  const data = useLoaderData(); // array of tickets
   const { id } = useParams();
-  const [ticket, setTicket] = useState(null);
+
+  const axiosSecure = useAxiosSecure();
+  const { data: ticket = {} } = useQuery({
+    queryKey: ["ticket", id],
+    queryFn: async () => {
+      const res = await axiosSecure(`/ticket/${id}`);
+      return res.data;
+    },
+  });
   const handleBook = () => {
     toast.info("booking successful");
   };
-  useEffect(() => {
-    // Find the ticket with matching id
-    const detailTicket = data.find((d) => d.id === parseInt(id));
-    setTicket(detailTicket || null);
-  }, [id, data]);
 
   if (!ticket) {
-    return (
-      <div className="text-center py-10 text-gray-500">Ticket not found</div>
-    );
+    return <Loader />;
   }
 
   return (
