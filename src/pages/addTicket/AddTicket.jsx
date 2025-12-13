@@ -1,24 +1,22 @@
-import React from "react";
+import { useForm } from "react-hook-form";
+import useAxiosSecure from "../../hook/useAxiosSecure";
 
 const AddTicket = () => {
+  const { register, handleSubmit } = useForm();
+  const axiosSecure = useAxiosSecure();
+
+  const handleAddTicket = (data) => {
+    axiosSecure.post("/ticket", data).then((res) => console.log(res.data));
+  };
   return (
     <div className="my-10">
-      <form className="max-w-xl mx-auto p-6 bg-base-200 rounded-lg shadow-lg space-y-4">
+      <form
+        onSubmit={handleSubmit(handleAddTicket)}
+        className="max-w-xl mx-auto p-6 bg-base-200 rounded-lg shadow-lg space-y-4"
+      >
         <h2 className="text-3xl font-bold mb-6 text-center">
           Add <span className="text-primary">Ticket</span>
         </h2>
-
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">ID</span>
-          </label>
-          <input
-            type="number"
-            name="id"
-            required
-            className="input input-bordered w-full"
-          />
-        </div>
 
         <div className="form-control">
           <label className="label">
@@ -29,6 +27,7 @@ const AddTicket = () => {
             name="image"
             required
             className="input input-bordered w-full"
+            {...register("image", { required: true })}
           />
         </div>
 
@@ -41,6 +40,7 @@ const AddTicket = () => {
             name="ticketTitle"
             required
             className="input input-bordered w-full"
+            {...register("ticketTitle", { required: true })}
           />
         </div>
 
@@ -54,6 +54,7 @@ const AddTicket = () => {
               name="from"
               required
               className="input input-bordered w-full"
+              {...register("from", { required: true })}
             />
           </div>
 
@@ -66,6 +67,7 @@ const AddTicket = () => {
               name="to"
               required
               className="input input-bordered w-full"
+              {...register("to", { required: true })}
             />
           </div>
         </div>
@@ -77,11 +79,12 @@ const AddTicket = () => {
           <select
             name="transportType"
             className="select select-bordered w-full"
+            {...register("transportType", { required: true })}
           >
-            <option>Bus</option>
-            <option>Car</option>
-            <option>Flight</option>
-            <option>Train</option>
+            <option value="Bus">Bus</option>
+            <option value="Car">Car</option>
+            <option value="Flight">Flight</option>
+            <option value="Train">Train</option>
           </select>
         </div>
 
@@ -95,6 +98,7 @@ const AddTicket = () => {
               name="price"
               required
               className="input input-bordered w-full"
+              {...register("price", { required: true })}
             />
           </div>
 
@@ -107,6 +111,7 @@ const AddTicket = () => {
               name="ticketQuantity"
               required
               className="input input-bordered w-full"
+              {...register("ticketQuantity", { required: true })}
             />
           </div>
         </div>
@@ -120,6 +125,7 @@ const AddTicket = () => {
             name="perks"
             placeholder="Camel ride, Dinner"
             className="input input-bordered w-full"
+            {...register("perks", { required: true })}
           />
         </div>
 
@@ -132,6 +138,7 @@ const AddTicket = () => {
             name="departureDateTime"
             required
             className="input input-bordered w-full"
+            {...register("departureDateTime", { required: true })}
           />
         </div>
 
