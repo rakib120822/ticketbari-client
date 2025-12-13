@@ -9,7 +9,7 @@ import DashboardLayout from "../layouts/dashboardlayout/DashboardLayout";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import DetailsPage from "../pages/detailPage/DetailsPage";
-import BeAVendor from "../pages/be-a-vendor/BeAVendor";
+
 import AddTicket from "../pages/addTicket/AddTicket";
 import PrivateRoutes from "./PrivateRoutes";
 
@@ -25,24 +25,12 @@ const router = createBrowserRouter([
       },
       {
         path: "all-tickets",
-        element: (
-          <PrivateRoutes>
-            <AllTicket />
-          </PrivateRoutes>
-        ),
+        element: <AllTicket />,
         loader: () => fetch("/data.json"),
       },
       {
         path: "about-us",
         element: <AboutUs />,
-      },
-      {
-        path: "/be-a-vendor",
-        element: (
-          <PrivateRoutes>
-            <BeAVendor />
-          </PrivateRoutes>
-        ),
       },
       {
         path: "contact-us",
@@ -54,7 +42,11 @@ const router = createBrowserRouter([
       },
       {
         path: "details/:id",
-        element: <DetailsPage />,
+        element: (
+          <PrivateRoutes>
+            <DetailsPage />
+          </PrivateRoutes>
+        ),
         loader: () => fetch("/data.json"),
       },
     ],

@@ -10,15 +10,25 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { logIn, setUser, setLoading } = useAuth();
+  const { logIn, setUser, setLoading, googleSignIn } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location);
 
   const handleLogin = (data) => {
     console.log(data);
     setLoading(true);
     logIn(data.email, data.password).then((res) => {
+      setUser(res.user);
+      setLoading(false);
+      toast.info("Successfully Logged In");
+      navigate(`${location?.state || "/"}`);
+    });
+  };
+
+  const handleGoogleSignIn = () => {
+    setLoading(true);
+    googleSignIn().then((res) => {
+      console.log(res.user);
       setUser(res.user);
       setLoading(false);
       toast.info("Successfully Logged In");
@@ -100,7 +110,10 @@ const Login = () => {
         </div>
 
         {/* Google Login */}
-        <button className="flex items-center justify-center w-full border border-gray-300 px-4 py-2 rounded hover:bg-gray-100 transition">
+        <button
+          onClick={handleGoogleSignIn}
+          className="flex items-center justify-center w-full border border-gray-300 px-4 py-2 rounded hover:bg-gray-100 transition"
+        >
           <svg
             aria-label="Google logo"
             width="26"

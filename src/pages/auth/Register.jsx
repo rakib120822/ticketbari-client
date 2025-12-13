@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import useAuth from "../../hook/useAuth";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -11,7 +11,10 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { registerUser, updateProfileInfo, setLoading, setUser } = useAuth();
+  const { registerUser, updateProfileInfo, setLoading, setUser, googleSignIn } =
+    useAuth();
+
+  const navigate = useNavigate();
 
   const handleFormSubmit = (data) => {
     const { name, email, password, photoUrl } = data;
@@ -29,7 +32,7 @@ const Register = () => {
           const url = res.data.data.display_url;
           updateProfileInfo(name, url).then(() => {
             setUser({ ...result.user });
-
+            navigate(`${location?.state || "/"}`);
             toast.info("Register Done");
           });
         });
@@ -37,6 +40,18 @@ const Register = () => {
       .catch((err) => console.log(err));
     setLoading(false);
   };
+
+  const handleGoogleSignIn = () => {
+    setLoading(true);
+    googleSignIn().then((res) => {
+      console.log(res.user);
+      setUser(res.user);
+      setLoading(false);
+      toast.info("Successfully Logged In");
+      navigate(`${location?.state || "/"}`);
+    });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-10">
       <div className="max-w-md w-full p-8 bg-white rounded shadow">
@@ -147,7 +162,10 @@ const Register = () => {
 
         {/* Google Login */}
 
-        <button className="btn bg-white text-black border-[#e5e5e5] w-full">
+        <button
+          onClick={handleGoogleSignIn}
+          className="btn bg-white text-black border-[#e5e5e5] w-full"
+        >
           <svg
             aria-label="Google logo"
             width="26"
