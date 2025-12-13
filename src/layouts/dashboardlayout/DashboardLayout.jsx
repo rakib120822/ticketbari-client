@@ -1,6 +1,6 @@
 import { Link, Outlet } from "react-router";
-
-import React from "react";
+import { TbBrandBooking } from "react-icons/tb";
+import { FaUser } from "react-icons/fa";
 
 const DashboardLayout = () => {
   return (
@@ -70,6 +70,28 @@ const DashboardLayout = () => {
                     <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                   </svg>
                   <span className="is-drawer-close:hidden">Homepage</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/dashboard/profile"}
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Profile"
+                >
+                  {/* user icon */}
+                  <FaUser />
+                  <span className="is-drawer-close:hidden">Profile</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/dashboard/booking"}
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Booking"
+                >
+                  {/* booking icon */}
+                  <TbBrandBooking />
+                  <span className="is-drawer-close:hidden">Booking</span>
                 </Link>
               </li>
 

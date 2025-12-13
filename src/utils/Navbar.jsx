@@ -3,10 +3,19 @@ import { Link, NavLink } from "react-router";
 import useAuth from "../hook/useAuth";
 import { toast } from "react-toastify";
 import Loader from "../component/spinner/Loader";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSEcure from "../hook/useAxiosSecure";
 
 const Navbar = () => {
   const { user, logOut, loading, setLoading, setUser } = useAuth();
-  console.log(user);
+  const axiosSecure = useAxiosSEcure();
+  const { data: userInfo } = useQuery({
+    queryKey: ["user", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/user?email=${user?.email}`);
+      return res.data;
+    },
+  });
   const links = (
     <>
       <li>
@@ -15,12 +24,21 @@ const Navbar = () => {
       <li>
         <NavLink to={"/all-tickets"}>All Tickets</NavLink>
       </li>
-      <li>
-        <NavLink to={"/add-ticket"}>Add Ticket</NavLink>
-      </li>
-      <li>
-        <NavLink to={"/dashboard"}>Dashboard</NavLink>
-      </li>
+      {userInfo?.role === "vendor" ? (
+        <li>
+          <NavLink to={"/add-ticket"}>Add Ticket</NavLink>
+        </li>
+      ) : (
+        ""
+      )}
+      {user ? (
+        <li>
+          <NavLink to={"/dashboard"}>Dashboard</NavLink>
+        </li>
+      ) : (
+        ""
+      )}
+
       <li>
         <NavLink to={"/contact-us"}>Contact us</NavLink>
       </li>

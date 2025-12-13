@@ -12,6 +12,8 @@ import DetailsPage from "../pages/detailPage/DetailsPage";
 
 import AddTicket from "../pages/addTicket/AddTicket";
 import PrivateRoutes from "./PrivateRoutes";
+import Profile from "../pages/profile/Profile";
+import BookingPage from "../pages/dashboard/booking/BookingPage";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +71,16 @@ const router = createBrowserRouter([
         <DashboardLayout />
       </PrivateRoutes>
     ),
+    children: [
+      {
+        path: "profile",
+        element: <Profile />,
+      },
+      {
+        path: "booking",
+        element: <BookingPage />,
+      },
+    ],
   },
 ]);
 

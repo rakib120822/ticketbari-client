@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router";
 import useAuth from "../../hook/useAuth";
 import { toast } from "react-toastify";
 import axios from "axios";
+import useAxiosSecure from "../../hook/useAxiosSecure";
 
 const Register = () => {
   const {
@@ -15,6 +16,7 @@ const Register = () => {
     useAuth();
 
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
 
   const handleFormSubmit = (data) => {
     const { name, email, password, photoUrl } = data;
@@ -32,8 +34,12 @@ const Register = () => {
           const url = res.data.data.display_url;
           updateProfileInfo(name, url).then(() => {
             setUser({ ...result.user });
-            navigate(`${location?.state || "/"}`);
-            toast.info("Register Done");
+            axiosSecure.post("/user", result.user).then((res) => {
+              if (res.data.insertedId) {
+                navigate(`${location?.state || "/"}`);
+                toast.info("Register Done");
+              }
+            });
           });
         });
       })
@@ -44,7 +50,6 @@ const Register = () => {
   const handleGoogleSignIn = () => {
     setLoading(true);
     googleSignIn().then((res) => {
-      console.log(res.user);
       setUser(res.user);
       setLoading(false);
       toast.info("Successfully Logged In");

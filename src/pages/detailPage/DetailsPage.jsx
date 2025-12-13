@@ -3,25 +3,67 @@ import { toast } from "react-toastify";
 import useAxiosSecure from "../../hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "../../component/spinner/Loader";
+import { useRef } from "react";
+import useAuth from "../../hook/useAuth";
 
 const DetailsPage = () => {
   const { id } = useParams();
-
+  const modalRef = useRef(null);
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const { data: ticket = {} } = useQuery({
+
+  const { data: ticket, isLoading } = useQuery({
     queryKey: ["ticket", id],
     queryFn: async () => {
-      const res = await axiosSecure(`/ticket/${id}`);
+      const res = await axiosSecure.get(`/ticket/${id}`);
       return res.data;
     },
   });
-  const handleBook = () => {
-    toast.info("booking successful");
-  };
 
-  if (!ticket) {
+  if (isLoading) {
     return <Loader />;
   }
+
+  const handleBook = async (e) => {
+    e.preventDefault();
+
+    const quantity = Number(e.target.quantity.value);
+
+    if (!quantity || quantity <= 0) {
+      return toast.warning("Please enter a valid quantity");
+    }
+
+    if (quantity > ticket.ticketQuantity) {
+      return toast.warning("Not enough tickets available!");
+    }
+
+    const bookingData = {
+      ticketId: ticket._id,
+      ticketTitle: ticket.ticketTitle,
+      image: ticket.image,
+      from: ticket.from,
+      to: ticket.to,
+      transportType: ticket.transportType,
+      departureDateTime: ticket.departureDateTime,
+      unitPrice: ticket.price,
+      bookingQuantity: quantity,
+      totalPrice: quantity * ticket.price,
+      buyerEmail: user?.email,
+      buyerName: user?.displayName,
+      status: "pending",
+      createdAt: new Date(),
+    };
+
+    try {
+      const res = await axiosSecure.post("/booking", bookingData);
+      if (res.data.insertedId) {
+        toast.success("Booking successful!");
+        modalRef.current.close();
+      }
+    } catch (error) {
+      toast.error("Booking failed!", error);
+    }
+  };
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow my-10">
@@ -30,37 +72,60 @@ const DetailsPage = () => {
         alt={ticket.ticketTitle}
         className="w-full h-64 object-cover rounded mb-6"
       />
+
       <h2 className="text-2xl font-bold mb-2">{ticket.ticketTitle}</h2>
-      <p className="text-gray-700 mb-1">
+
+      <p>
         <strong>From:</strong> {ticket.from}
       </p>
-      <p className="text-gray-700 mb-1">
+      <p>
         <strong>To:</strong> {ticket.to}
       </p>
-      <p className="text-gray-700 mb-1">
-        <strong>Transport Type:</strong> {ticket.transportType}
+      <p>
+        <strong>Transport:</strong> {ticket.transportType}
       </p>
-      <p className="text-gray-700 mb-1">
+      <p>
         <strong>Price:</strong> ${ticket.price}
       </p>
-      <p className="text-gray-700 mb-1">
-        <strong>Quantity Available:</strong> {ticket.ticketQuantity}
+      <p>
+        <strong>Available:</strong> {ticket.ticketQuantity}
+      </p>
+      <p>
+        <strong>Departure:</strong>{" "}
+        {new Date(ticket.departureDateTime).toLocaleString()}
       </p>
 
-      <div className="flex justify-between items-center">
-        <div>
-          <p className="text-gray-700 mb-1">
-            <strong>Perks:</strong> {ticket.perks}
-          </p>
-          <p className="text-gray-700 mb-1">
-            <strong>Departure:</strong>{" "}
-            {new Date(ticket.departureDateTime).toLocaleString()}
-          </p>
+      <button
+        onClick={() => modalRef.current.showModal()}
+        className="btn btn-primary mt-4"
+      >
+        Book Now
+      </button>
+
+      {/* Modal */}
+      <dialog ref={modalRef} className="modal">
+        <div className="modal-box">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+
+          <form onSubmit={handleBook} className="mt-6">
+            <input
+              type="number"
+              name="quantity"
+              min="1"
+              max={ticket.ticketQuantity}
+              className="input input-bordered w-full mb-4"
+              placeholder="Enter ticket quantity"
+              required
+            />
+
+            <button className="btn btn-primary w-full">Confirm Booking</button>
+          </form>
         </div>
-        <button onClick={handleBook} className="btn btn-primary">
-          Book Now
-        </button>
-      </div>
+      </dialog>
     </div>
   );
 };
