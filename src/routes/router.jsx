@@ -14,6 +14,10 @@ import AddTicket from "../pages/addTicket/AddTicket";
 import PrivateRoutes from "./PrivateRoutes";
 import Profile from "../pages/profile/Profile";
 import BookingPage from "../pages/dashboard/booking/BookingPage";
+import PaymentSuccess from "../pages/dashboard/paymentPage/SuccessPage";
+import PaymentHistory from "../pages/dashboard/paymentHistory/PaymentHistory";
+import MyAddTicket from "../pages/dashboard/my-added-ticket/MyAddTicket";
+import VendorRequestPage from "../pages/dashboard/booking/VendorRequestPage";
 
 const router = createBrowserRouter([
   {
@@ -36,10 +40,7 @@ const router = createBrowserRouter([
         path: "contact-us",
         element: <ContactUs />,
       },
-      {
-        path: "add-ticket",
-        element: <AddTicket />,
-      },
+
       {
         path: "details/:id",
         element: (
@@ -79,6 +80,34 @@ const router = createBrowserRouter([
       {
         path: "booking",
         element: <BookingPage />,
+      },
+      {
+        path: "payment-success",
+        element: (
+          <PrivateRoutes>
+            <PaymentSuccess />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "payment-history",
+        element: (
+          <PrivateRoutes>
+            <PaymentHistory />
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "add-ticket",
+        element: <AddTicket />,
+      },
+      {
+        path: "my-ticket",
+        element: <MyAddTicket />,
+      },
+      {
+        path: "request-ticket",
+        element: <VendorRequestPage />,
       },
     ],
   },

@@ -1,6 +1,10 @@
 import { Link, Outlet } from "react-router";
 import { TbBrandBooking } from "react-icons/tb";
 import { FaUser } from "react-icons/fa";
+import { LuTicketPlus } from "react-icons/lu";
+import { FaHistory } from "react-icons/fa";
+import { LuTicketsPlane } from "react-icons/lu";
+import { FaCodePullRequest } from "react-icons/fa6";
 
 const DashboardLayout = () => {
   return (
@@ -92,6 +96,56 @@ const DashboardLayout = () => {
                   {/* booking icon */}
                   <TbBrandBooking />
                   <span className="is-drawer-close:hidden">Booking</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/dashboard/payment-history"}
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="History"
+                >
+                  {/* history icon */}
+                  <FaHistory />
+                  <span className="is-drawer-close:hidden">
+                    Payment History
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/dashboard/add-ticket"}
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Add Ticket"
+                >
+                  {/* add Ticket icon */}
+                  <LuTicketPlus />
+                  <span className="is-drawer-close:hidden">Add Ticket</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/dashboard/my-ticket"}
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="My Ticket"
+                >
+                  {/* add Ticket icon */}
+                  <LuTicketsPlane />
+                  <span className="is-drawer-close:hidden">
+                    My Added Ticket
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/dashboard/request-ticket"}
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Requested Booking"
+                >
+                  {/* add Ticket icon */}
+                  <FaCodePullRequest />
+                  <span className="is-drawer-close:hidden">
+                    Requested Booking
+                  </span>
                 </Link>
               </li>
 

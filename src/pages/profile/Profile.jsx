@@ -2,17 +2,26 @@ import React from "react";
 import useAuth from "../../hook/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hook/useAxiosSecure";
+import Loader from "../../component/spinner/Loader";
 
 const Profile = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const { data: userInfo } = useQuery({
-    queryKey: ["user", user.email],
+  console.log("user from firebase : ", user);
+  const { isLoading, data: userInfo } = useQuery({
+    enabled: !!user?.email,
+    queryKey: ["user", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/user?email=${user.email}`);
+      console.log(" this is usr Info : ", res.data);
       return res.data;
     },
   });
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row">

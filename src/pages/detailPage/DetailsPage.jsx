@@ -52,6 +52,7 @@ const DetailsPage = () => {
       buyerName: user?.displayName,
       status: "pending",
       createdAt: new Date(),
+      vendorEmail: ticket?.vendorEmail,
     };
 
     try {

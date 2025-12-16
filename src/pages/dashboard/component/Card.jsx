@@ -7,7 +7,7 @@ const Card = ({ ticket }) => {
     ticketTitle,
     image,
     bookingQuantity,
-    price,
+    totalPrice,
     from,
     to,
     departureDateTime,
@@ -51,12 +51,12 @@ const Card = ({ ticket }) => {
     const ticketInfo = {
       totalPrice: ticket.totalPrice,
       buyerEmail: ticket.buyerEmail,
-      ticket: ticket._id,
-      ticketTitle: ticket.ticketTitle,
+      ticketId: ticket.ticketId,
+      ticketTitle: ticketTitle,
+      bookingId: ticket._id,
     };
 
     const res = await axiosSecure.post("/payment-checkout-session", ticketInfo);
-    console.log(res.data);
     window.location.href = res.data.url;
   };
 
@@ -87,11 +87,13 @@ const Card = ({ ticket }) => {
         </p>
 
         <p>
-          <strong>Total Price:</strong> ${ticket.totalPrice}
+          <strong>Total Price:</strong> ${totalPrice}
         </p>
 
         <div className="flex items-center justify-between">
-          {status === "pending" ? (
+          {status === "pending" ||
+          status === "rejected" ||
+          status === "paid" ? (
             <span className={`badge ${statusColor[status]}`}>{status}</span>
           ) : (
             <button onClick={handlePayment} className="btn btn-primary">

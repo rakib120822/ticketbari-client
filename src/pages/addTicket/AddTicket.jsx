@@ -1,12 +1,17 @@
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../hook/useAxiosSecure";
+import useAuth from "../../hook/useAuth";
 
 const AddTicket = () => {
   const { register, handleSubmit } = useForm();
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
 
-  const handleAddTicket = (data) => {
-    axiosSecure.post("/ticket", data).then((res) => console.log(res.data));
+  const handleAddTicket = async (data) => {
+    console.log("added ticket form data : ", data);
+    const res = await axiosSecure.post("/ticket", data);
+    console.log("add tickter : ", res);
+    alert("ticket added");
   };
   return (
     <div className="my-10">
@@ -18,6 +23,32 @@ const AddTicket = () => {
           Add <span className="text-primary">Ticket</span>
         </h2>
 
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Vendor Name</span>
+          </label>
+          <input
+            type="text"
+            name="image"
+            required
+            className="input input-bordered w-full"
+            value={user?.displayName}
+            {...register("vendorName", { required: true })}
+          />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Vendor Email</span>
+          </label>
+          <input
+            type="text"
+            name="image"
+            required
+            className="input input-bordered w-full"
+            value={user?.email}
+            {...register("vendorEmail", { required: true })}
+          />
+        </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Image URL</span>

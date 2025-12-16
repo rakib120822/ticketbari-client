@@ -1,16 +1,18 @@
-import React from "react";
-import LatestCard from "../../component/card/LatestCard";
-import useAxiosSecure from "../../hook/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import useAxiosSEcure from "../../../hook/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import useAuth from "../../../hook/useAuth";
+import LatestCard from "../../../component/card/LatestCard";
 
-const AllTicket = () => {
-  const axiosSecure = useAxiosSecure();
+
+const MyAddTicket = () => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSEcure();
   const [tickets, setTickets] = useState();
   const { data } = useQuery({
-    queryKey: ["tickets", "alltickets"],
+    queryKey: ["tickets", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get("/ticket");
+      const res = await axiosSecure.get(`/my-ticket?email=${user?.email}`);
       setTickets(res.data);
       return res.data;
     },
@@ -39,7 +41,7 @@ const AllTicket = () => {
     <div className="px-10 mb-10">
       <div className="flex flex-col mb-5 md:mb-0 md:flex-row justify-between items-center">
         <h1 className="text-4xl font-bold my-10 text-center">
-          All <span className="text-primary">Tickets</span>
+          My <span className="text-primary">Tickets</span>
         </h1>
         <div className="flex gap-5">
           <select
@@ -73,4 +75,4 @@ const AllTicket = () => {
   );
 };
 
-export default AllTicket;
+export default MyAddTicket;
