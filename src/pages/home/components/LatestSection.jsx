@@ -3,10 +3,11 @@ import LatestCard from "../../../component/card/LatestCard";
 import { useQuery } from "@tanstack/react-query";
 
 import useAxios from "../../../hook/useAxios";
+import Loader from "../../../component/spinner/Loader";
 
 const LatestSection = () => {
   const axiosInstance = useAxios();
-  const { data: tickets = [] } = useQuery({
+  const { data: tickets = [], isLoading } = useQuery({
     queryKey: ["tickets", "latest"],
     queryFn: async () => {
       const res = await axiosInstance.get("/ticket-latest");
@@ -14,6 +15,12 @@ const LatestSection = () => {
       return res.data;
     },
   });
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  console.log(tickets);
   return (
     <div className="px-10">
       <h1 className="text-4xl font-bold my-10 text-center">

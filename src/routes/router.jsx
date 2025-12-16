@@ -18,6 +18,8 @@ import PaymentSuccess from "../pages/dashboard/paymentPage/SuccessPage";
 import PaymentHistory from "../pages/dashboard/paymentHistory/PaymentHistory";
 import MyAddTicket from "../pages/dashboard/my-added-ticket/MyAddTicket";
 import VendorRequestPage from "../pages/dashboard/booking/VendorRequestPage";
+import AdminTicketManage from "../pages/dashboard/ticket-manage/AdminTicketManage";
+import AdminAdvertisePage from "../pages/dashboard/advertize-manage/AdminAdvertisePage";
 
 const router = createBrowserRouter([
   {
@@ -108,6 +110,14 @@ const router = createBrowserRouter([
       {
         path: "request-ticket",
         element: <VendorRequestPage />,
+      },
+      {
+        path: "ticket-manage",
+        element: <AdminTicketManage />,
+      },
+      {
+        path: "advertize-manage",
+        element: <AdminAdvertisePage />,
       },
     ],
   },

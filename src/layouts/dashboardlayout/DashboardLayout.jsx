@@ -5,6 +5,10 @@ import { LuTicketPlus } from "react-icons/lu";
 import { FaHistory } from "react-icons/fa";
 import { LuTicketsPlane } from "react-icons/lu";
 import { FaCodePullRequest } from "react-icons/fa6";
+import { ImTicket } from "react-icons/im";
+import { RiAdvertisementLine } from "react-icons/ri";
+import { ToastContainer } from "react-toastify";
+import { FaUserCog } from "react-icons/fa";
 
 const DashboardLayout = () => {
   return (
@@ -148,6 +152,41 @@ const DashboardLayout = () => {
                   </span>
                 </Link>
               </li>
+              <li>
+                <Link
+                  to={"/dashboard/ticket-manage"}
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Ticket Manage"
+                >
+                  {/* add Ticket icon */}
+                  <ImTicket />
+                  <span className="is-drawer-close:hidden">Ticket Manage</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/dashboard/advertize-manage"}
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Advertize Manage"
+                >
+                  {/* add Ticket icon */}
+                  <RiAdvertisementLine />
+                  <span className="is-drawer-close:hidden">
+                    Advertize Manage
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={"/dashboard/user-manage"}
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="User Manage"
+                >
+                  {/* add Ticket icon */}
+                  <FaUserCog />
+                  <span className="is-drawer-close:hidden">User Manage</span>
+                </Link>
+              </li>
 
               {/* List item */}
               <li>
@@ -178,7 +217,7 @@ const DashboardLayout = () => {
           </div>
         </div>
       </div>
-      ;
+      <ToastContainer />
     </div>
   );
 };
