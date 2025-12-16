@@ -1,15 +1,16 @@
 import React from "react";
 
 import Marquee from "react-fast-marquee";
-import useAxiosSecure from "../../../hook/useAxiosSecure";
+
 import { useQuery } from "@tanstack/react-query";
+import useAxios from "../../../hook/useAxios";
 
 const PopularRoutes = () => {
-  const axiosSecure = useAxiosSecure();
+  const axiosInstance = useAxios();
   const { data: tickets = [] } = useQuery({
     queryKey: ["ticket", "popular"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/ticket-latest");
+      const res = await axiosInstance.get("/ticket-latest");
       return res.data;
     },
   });

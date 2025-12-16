@@ -1,14 +1,15 @@
 import React from "react";
 import LatestCard from "../../../component/card/LatestCard";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hook/useAxiosSecure";
+
+import useAxios from "../../../hook/useAxios";
 
 const LatestSection = () => {
-  const axiosSecure = useAxiosSecure();
+  const axiosInstance = useAxios();
   const { data: tickets = [] } = useQuery({
     queryKey: ["tickets", "latest"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/ticket-latest");
+      const res = await axiosInstance.get("/ticket-latest");
 
       return res.data;
     },

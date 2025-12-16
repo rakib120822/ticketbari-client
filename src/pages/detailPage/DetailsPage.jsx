@@ -55,13 +55,14 @@ const DetailsPage = () => {
     };
 
     try {
-      const res = await axiosSecure.post("/booking", bookingData);
+      const res = await axiosSecure.post(`/booking/${ticket._id}`, bookingData);
       if (res.data.insertedId) {
         toast.success("Booking successful!");
         modalRef.current.close();
       }
     } catch (error) {
       toast.error("Booking failed!", error);
+      console.log(error);
     }
   };
 

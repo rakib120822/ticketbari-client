@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import useAxiosSEcure from "../../../hook/useAxiosSecure";
 
 const Card = ({ ticket }) => {
+  const axiosSecure = useAxiosSEcure();
   const {
     ticketTitle,
     image,
@@ -45,6 +47,19 @@ const Card = ({ ticket }) => {
     paid: "badge-success",
   };
 
+  const handlePayment = async () => {
+    const ticketInfo = {
+      totalPrice: ticket.totalPrice,
+      buyerEmail: ticket.buyerEmail,
+      ticket: ticket._id,
+      ticketTitle: ticket.ticketTitle,
+    };
+
+    const res = await axiosSecure.post("/payment-checkout-session", ticketInfo);
+    console.log(res.data);
+    window.location.href = res.data.url;
+  };
+
   return (
     <div className="card bg-base-100 shadow-xl">
       <figure>
@@ -72,14 +87,16 @@ const Card = ({ ticket }) => {
         </p>
 
         <p>
-          <strong>Total Price:</strong> ${price}
+          <strong>Total Price:</strong> ${ticket.totalPrice}
         </p>
 
         <div className="flex items-center justify-between">
           {status === "pending" ? (
             <span className={`badge ${statusColor[status]}`}>{status}</span>
           ) : (
-            <button className="btn btn-primary">Pay Now</button>
+            <button onClick={handlePayment} className="btn btn-primary">
+              Pay Now
+            </button>
           )}
 
           <span className="text-sm text-primary">⏳ {countdown}</span>
