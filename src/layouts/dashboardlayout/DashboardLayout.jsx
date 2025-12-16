@@ -9,8 +9,20 @@ import { ImTicket } from "react-icons/im";
 import { RiAdvertisementLine } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
 import { FaUserCog } from "react-icons/fa";
+import useAuth from "../../hook/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../hook/useAxiosSecure";
 
 const DashboardLayout = () => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const { data } = useQuery({
+    queryKey: ["user", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure(`/user?email=${user.email}`);
+      return res.data;
+    },
+  });
   return (
     <div>
       <div className="drawer lg:drawer-open">
@@ -115,78 +127,98 @@ const DashboardLayout = () => {
                   </span>
                 </Link>
               </li>
-              <li>
-                <Link
-                  to={"/dashboard/add-ticket"}
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Add Ticket"
-                >
-                  {/* add Ticket icon */}
-                  <LuTicketPlus />
-                  <span className="is-drawer-close:hidden">Add Ticket</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to={"/dashboard/my-ticket"}
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="My Ticket"
-                >
-                  {/* add Ticket icon */}
-                  <LuTicketsPlane />
-                  <span className="is-drawer-close:hidden">
-                    My Added Ticket
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to={"/dashboard/request-ticket"}
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Requested Booking"
-                >
-                  {/* add Ticket icon */}
-                  <FaCodePullRequest />
-                  <span className="is-drawer-close:hidden">
-                    Requested Booking
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to={"/dashboard/ticket-manage"}
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Ticket Manage"
-                >
-                  {/* add Ticket icon */}
-                  <ImTicket />
-                  <span className="is-drawer-close:hidden">Ticket Manage</span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to={"/dashboard/advertize-manage"}
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Advertize Manage"
-                >
-                  {/* add Ticket icon */}
-                  <RiAdvertisementLine />
-                  <span className="is-drawer-close:hidden">
-                    Advertize Manage
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to={"/dashboard/user-manage"}
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="User Manage"
-                >
-                  {/* add Ticket icon */}
-                  <FaUserCog />
-                  <span className="is-drawer-close:hidden">User Manage</span>
-                </Link>
-              </li>
+
+              {/* {vendor_route} */}
+              {data?.role === "vendor" ? (
+                <>
+                  <li>
+                    <Link
+                      to={"/dashboard/add-ticket"}
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Add Ticket"
+                    >
+                      {/* add Ticket icon */}
+                      <LuTicketPlus />
+                      <span className="is-drawer-close:hidden">Add Ticket</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/dashboard/request-ticket"}
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Requested Booking"
+                    >
+                      {/* add Ticket icon */}
+                      <FaCodePullRequest />
+                      <span className="is-drawer-close:hidden">
+                        Requested Booking
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/dashboard/my-ticket"}
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="My Ticket"
+                    >
+                      {/* add Ticket icon */}
+                      <LuTicketsPlane />
+                      <span className="is-drawer-close:hidden">
+                        My Added Ticket
+                      </span>
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                ""
+              )}
+
+              {/*admin routes */}
+              {data?.role === "admin" ? (
+                <>
+                  <li>
+                    <Link
+                      to={"/dashboard/ticket-manage"}
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Ticket Manage"
+                    >
+                      {/* add Ticket icon */}
+                      <ImTicket />
+                      <span className="is-drawer-close:hidden">
+                        Ticket Manage
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/dashboard/advertize-manage"}
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Advertize Manage"
+                    >
+                      {/* add Ticket icon */}
+                      <RiAdvertisementLine />
+                      <span className="is-drawer-close:hidden">
+                        Advertize Manage
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to={"/dashboard/user-manage"}
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="User Manage"
+                    >
+                      {/* add Ticket icon */}
+                      <FaUserCog />
+                      <span className="is-drawer-close:hidden">
+                        User Manage
+                      </span>
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                ""
+              )}
 
               {/* List item */}
               <li>
