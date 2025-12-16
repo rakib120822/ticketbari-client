@@ -26,12 +26,15 @@ const AdminUsersManage = () => {
       }
     } catch (error) {
       toast.error("Failed to update role");
+      console.log(error);
     }
   };
 
-  const handleFraudToggle = async (id, isFraud) => {
+  const handleFraudToggle = async (id, isFraud, email) => {
     try {
-      const res = await axiosSecure.patch(`/users/${id}/fraud`, { isFraud });
+      const res = await axiosSecure.patch(`/users/${id}/fraud?email=${email}`, {
+        isFraud,
+      });
       if (res.data.modifiedCount > 0) {
         toast.success(
           isFraud ? "Vendor marked as fraud" : "Vendor recovered successfully"
@@ -40,6 +43,7 @@ const AdminUsersManage = () => {
       }
     } catch (error) {
       toast.error("Failed to update fraud status");
+      console.log(error);
     }
   };
 
@@ -119,14 +123,18 @@ const AdminUsersManage = () => {
                       {!user.isFraud ? (
                         <button
                           className="btn btn-sm btn-error"
-                          onClick={() => handleFraudToggle(user._id, true)}
+                          onClick={() =>
+                            handleFraudToggle(user._id, true, user.email)
+                          }
                         >
                           Mark as Fraud
                         </button>
                       ) : (
                         <button
                           className="btn btn-sm btn-success"
-                          onClick={() => handleFraudToggle(user._id, false)}
+                          onClick={() =>
+                            handleFraudToggle(user._id, false, user.email)
+                          }
                         >
                           Remove Fraud
                         </button>
