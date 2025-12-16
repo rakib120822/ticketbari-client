@@ -20,6 +20,7 @@ import MyAddTicket from "../pages/dashboard/my-added-ticket/MyAddTicket";
 import VendorRequestPage from "../pages/dashboard/booking/VendorRequestPage";
 import AdminTicketManage from "../pages/dashboard/ticket-manage/AdminTicketManage";
 import AdminAdvertisePage from "../pages/dashboard/advertize-manage/AdminAdvertisePage";
+import AdminUsersManage from "../pages/dashboard/user-manage/AdminUserManage";
 
 const router = createBrowserRouter([
   {
@@ -118,6 +119,10 @@ const router = createBrowserRouter([
       {
         path: "advertize-manage",
         element: <AdminAdvertisePage />,
+      },
+      {
+        path: "user-manage",
+        element: <AdminUsersManage />,
       },
     ],
   },

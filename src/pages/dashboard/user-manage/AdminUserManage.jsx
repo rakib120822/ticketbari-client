@@ -2,11 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSEcure from "../../../hook/useAxiosSecure";
 import { toast } from "react-toastify";
 
-
 const AdminUsersManage = () => {
   const axiosSecure = useAxiosSEcure();
 
-  const { data: users = [], refetch } = useQuery({
+  const {
+    data: users = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
@@ -18,83 +21,123 @@ const AdminUsersManage = () => {
     try {
       const res = await axiosSecure.patch(`/users/${id}/role`, { role });
       if (res.data.modifiedCount > 0) {
-        toast.success(`User is now ${role}`);
+        toast.success(`Role updated to ${role}`);
         refetch();
       }
-    } catch {
-      toast.error("Action failed");
+    } catch (error) {
+      toast.error("Failed to update role");
     }
   };
 
-  const handleMarkFraud = async (id) => {
+  const handleFraudToggle = async (id, isFraud) => {
     try {
-      const res = await axiosSecure.patch(`/users/${id}/fraud`);
+      const res = await axiosSecure.patch(`/users/${id}/fraud`, { isFraud });
       if (res.data.modifiedCount > 0) {
-        toast.success("Vendor marked as fraud");
+        toast.success(
+          isFraud ? "Vendor marked as fraud" : "Vendor recovered successfully"
+        );
         refetch();
       }
-    } catch {
-      toast.error("Failed to mark fraud");
+    } catch (error) {
+      toast.error("Failed to update fraud status");
     }
   };
+
+  if (isLoading) {
+    return <div className="text-center mt-10">Loading users...</div>;
+  }
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">Manage Users</h2>
+      <h2 className="text-3xl font-bold mb-6">👥 Manage Users</h2>
 
       <div className="overflow-x-auto">
         <table className="table table-zebra">
-          <thead>
+          <thead className="bg-base-200">
             <tr>
               <th>#</th>
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
-              <th>Make Admin</th>
-              <th>Make Vendor</th>
-              <th>Fraud</th>
+              <th>Admin Action</th>
+              <th>Vendor Action</th>
+              <th>Fraud Control</th>
             </tr>
           </thead>
+
           <tbody>
             {users.map((user, index) => (
               <tr key={user._id} className={user.isFraud ? "opacity-50" : ""}>
                 <td>{index + 1}</td>
-                <td>{user.name}</td>
+                <td>{user.displayName || "N/A"}</td>
                 <td>{user.email}</td>
-                <td className="capitalize">{user.role}</td>
+                <td className="capitalize font-semibold">{user.role}</td>
 
+                {/* Admin */}
                 <td>
-                  <button
-                    className="btn btn-sm btn-success"
-                    disabled={user.role === "admin"}
-                    onClick={() => handleRoleChange(user._id, "admin")}
-                  >
-                    Make Admin
-                  </button>
-                </td>
-
-                <td>
-                  <button
-                    className="btn btn-sm btn-info"
-                    disabled={user.role === "vendor"}
-                    onClick={() => handleRoleChange(user._id, "vendor")}
-                  >
-                    Make Vendor
-                  </button>
-                </td>
-
-                <td>
-                  {user.role === "vendor" && !user.isFraud && (
+                  {user.role === "admin" ? (
                     <button
-                      className="btn btn-sm btn-error"
-                      onClick={() => handleMarkFraud(user._id)}
+                      className="btn btn-sm btn-warning"
+                      onClick={() => handleRoleChange(user._id, "user")}
                     >
-                      Mark as Fraud
+                      Remove Admin
                     </button>
+                  ) : (
+                    <button
+                      className="btn btn-sm btn-success"
+                      onClick={() => handleRoleChange(user._id, "admin")}
+                    >
+                      Make Admin
+                    </button>
+                  )}
+                </td>
+
+                {/* Vendor */}
+                <td>
+                  {user.role === "vendor" ? (
+                    <button
+                      className="btn btn-sm btn-outline"
+                      onClick={() => handleRoleChange(user._id, "user")}
+                    >
+                      Remove Vendor
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-sm btn-info"
+                      onClick={() => handleRoleChange(user._id, "vendor")}
+                      disabled={user.isFraud}
+                    >
+                      Make Vendor
+                    </button>
+                  )}
+                </td>
+
+                {/* Fraud */}
+                <td>
+                  {user.role === "vendor" && (
+                    <>
+                      {!user.isFraud ? (
+                        <button
+                          className="btn btn-sm btn-error"
+                          onClick={() => handleFraudToggle(user._id, true)}
+                        >
+                          Mark as Fraud
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-sm btn-success"
+                          onClick={() => handleFraudToggle(user._id, false)}
+                        >
+                          Remove Fraud
+                        </button>
+                      )}
+                    </>
                   )}
 
                   {user.isFraud && (
-                    <span className="text-red-500 font-semibold">Fraud</span>
+                    <span className="ml-2 text-red-500 font-semibold">
+                      Fraud
+                    </span>
                   )}
                 </td>
               </tr>
