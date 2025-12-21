@@ -21,6 +21,9 @@ import VendorRequestPage from "../pages/dashboard/booking/VendorRequestPage";
 import AdminTicketManage from "../pages/dashboard/ticket-manage/AdminTicketManage";
 import AdminAdvertisePage from "../pages/dashboard/advertize-manage/AdminAdvertisePage";
 import AdminUsersManage from "../pages/dashboard/user-manage/AdminUserManage";
+import VendorRoutes from "./VendorRoutes";
+import AdminRoutes from "./AdminRoutes";
+import DashboardHome from "../pages/dashbaordLandingPage/DashboardLandingPage";
 
 const router = createBrowserRouter([
   {
@@ -77,6 +80,10 @@ const router = createBrowserRouter([
     ),
     children: [
       {
+        index: true,
+        element: <DashboardHome />,
+      },
+      {
         path: "profile",
         element: <Profile />,
       },
@@ -102,7 +109,11 @@ const router = createBrowserRouter([
       },
       {
         path: "add-ticket",
-        element: <AddTicket />,
+        element: (
+          <VendorRoutes>
+            <AddTicket />
+          </VendorRoutes>
+        ),
       },
       {
         path: "my-ticket",
@@ -110,19 +121,35 @@ const router = createBrowserRouter([
       },
       {
         path: "request-ticket",
-        element: <VendorRequestPage />,
+        element: (
+          <VendorRoutes>
+            <VendorRequestPage />
+          </VendorRoutes>
+        ),
       },
       {
         path: "ticket-manage",
-        element: <AdminTicketManage />,
+        element: (
+          <AdminRoutes>
+            <AdminTicketManage />
+          </AdminRoutes>
+        ),
       },
       {
         path: "advertize-manage",
-        element: <AdminAdvertisePage />,
+        element: (
+          <AdminRoutes>
+            <AdminAdvertisePage />
+          </AdminRoutes>
+        ),
       },
       {
         path: "user-manage",
-        element: <AdminUsersManage />,
+        element: (
+          <AdminRoutes>
+            <AdminUsersManage />
+          </AdminRoutes>
+        ),
       },
     ],
   },

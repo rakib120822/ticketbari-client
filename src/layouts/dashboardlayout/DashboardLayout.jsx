@@ -9,20 +9,19 @@ import { ImTicket } from "react-icons/im";
 import { RiAdvertisementLine } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
 import { FaUserCog } from "react-icons/fa";
+
+import useRole from "../../hook/useRole";
 import useAuth from "../../hook/useAuth";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hook/useAxiosSecure";
+import Loader from "../../component/spinner/Loader";
 
 const DashboardLayout = () => {
-  const { user } = useAuth();
-  const axiosSecure = useAxiosSecure();
-  const { data } = useQuery({
-    queryKey: ["user", user?.email],
-    queryFn: async () => {
-      const res = await axiosSecure(`/user?email=${user.email}`);
-      return res.data;
-    },
-  });
+  const { data: userRole, isLoading } = useRole();
+  const { loading } = useAuth();
+
+  if (loading || isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div>
       <div className="drawer lg:drawer-open">
@@ -129,7 +128,7 @@ const DashboardLayout = () => {
               </li>
 
               {/* {vendor_route} */}
-              {data?.role === "vendor" ? (
+              {userRole.role === "vendor" ? (
                 <>
                   <li>
                     <Link
@@ -174,7 +173,7 @@ const DashboardLayout = () => {
               )}
 
               {/*admin routes */}
-              {data?.role === "admin" ? (
+              {userRole.role === "admin" ? (
                 <>
                   <li>
                     <Link

@@ -3,9 +3,9 @@ import { Link } from "react-router";
 
 const LatestCard = ({ data }) => {
   return (
-    <div className="card bg-base-100  shadow-sm">
+    <div className="card bg-base-100 border border-primary shadow-sm">
       <figure>
-        <img src={data?.image} alt="Shoes" className="h-65" />
+        <img src={data?.image} alt="Shoes" className="h-65 w-full" />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{data?.ticketTitle}</h2>

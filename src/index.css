@@ -1,14 +1,22 @@
 @import "tailwindcss";
+
 @plugin "daisyui" {
-  themes: light --default;
-}
-@plugin "daisyui/theme" {
-  name: "light";
-  default: true; /* set as default */
-  --color-primary: #0EA5E9;
+  themes: ["light", "dark"];
 }
 
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #0ea5e9;  /* sky-500 */
+}
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  --color-primary: #0ea5e9;
+}
+
+/* Your custom active link style */
 a.active {
-  color: #0EA5E9;
+  color: #0ea5e9;
   text-decoration: underline;
 }
