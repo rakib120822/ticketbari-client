@@ -19,7 +19,7 @@ const MyAddTicket = () => {
   });
 
   const handleTransport = (e) => {
-    console.log(e.target.value);
+
     const transport = e.target.value;
     setTickets(data.filter((c) => c.transportType === transport));
   };

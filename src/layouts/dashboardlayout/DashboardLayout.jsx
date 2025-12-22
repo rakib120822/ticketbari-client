@@ -52,7 +52,19 @@ const DashboardLayout = () => {
               </svg>
             </label>
             <div className="px-4">
-              <Navbar />
+              <Link to={"/"} className="font-bold  text-2xl">
+                <div className="flex items-center gap-2">
+                  <img
+                    width="35"
+                    height="35"
+                    src="https://img.icons8.com/fluency/48/ticket-booth.png"
+                    alt="ticket-booth"
+                  />
+                  <p>
+                    Ticket<span className="text-sky-500">Bari</span>
+                  </p>
+                </div>
+              </Link>
             </div>
           </nav>
           {/* Page content here */}

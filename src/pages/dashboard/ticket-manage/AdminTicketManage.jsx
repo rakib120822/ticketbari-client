@@ -15,7 +15,7 @@ const AdminTicketManage = () => {
     queryKey: ["admin-tickets"],
     queryFn: async () => {
       const res = await axiosSecure.get("/ticket");
-      return res.data;
+      return res.data.tickets;
     },
   });
 

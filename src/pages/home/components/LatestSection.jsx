@@ -20,7 +20,7 @@ const LatestSection = () => {
     return <Loader />;
   }
 
-  console.log(tickets);
+
   return (
     <div className="px-10">
       <h1 className="text-4xl font-bold my-10 text-center">

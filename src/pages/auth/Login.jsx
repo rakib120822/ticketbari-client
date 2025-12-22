@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../hook/useAuth";
 import { toast } from "react-toastify";
+import useAxiosSEcure from "../../hook/useAxiosSecure";
 
 const Login = () => {
   const {
@@ -13,9 +14,10 @@ const Login = () => {
   const { logIn, setUser, setLoading, googleSignIn } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSEcure();
 
   const handleLogin = (data) => {
-    console.log(data);
+
     setLoading(true);
     logIn(data.email, data.password).then((res) => {
       setUser(res.user);
@@ -25,15 +27,32 @@ const Login = () => {
     });
   };
 
-  const handleGoogleSignIn = () => {
-    setLoading(true);
-    googleSignIn().then((res) => {
-      console.log(res.user);
-      setUser(res.user);
-      setLoading(false);
-      toast.info("Successfully Logged In");
-      navigate(`${location?.state || "/"}`);
-    });
+  const handleGoogleSignIn = async () => {
+    try {
+      setLoading(true);
+
+      // Sign in with Google
+      const res = await googleSignIn();
+      const user = res.user;
+      setUser(user);
+
+
+      // Save user to backend
+      const data = await axiosSecure.post("/user", user);
+      if (data.data.insertedId) {
+        toast.info("Registration completed");
+      }
+
+      toast.success("Successfully Logged In");
+
+      // Navigate to previous page or home
+      navigate(location?.state || "/");
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      toast.error("Failed to login with Google");
+    } finally {
+      setLoading(false); // always reset loading
+    }
   };
 
   return (

@@ -7,13 +7,13 @@ import Loader from "../../component/spinner/Loader";
 const Profile = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  console.log("user from firebase : ", user);
+
   const { isLoading, data: userInfo } = useQuery({
     enabled: !!user?.email,
     queryKey: ["user", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/user?email=${user.email}`);
-      console.log(" this is usr Info : ", res.data);
+      const res = await axiosSecure.get(`/user?email=${user?.email}`);
+
       return res.data;
     },
   });
@@ -37,7 +37,6 @@ const Profile = () => {
           <p className="pb-2">
             <span className="font-bold">Role :</span> {userInfo?.role}
           </p>
-          <button className="btn btn-primary">Get Started</button>
         </div>
       </div>
     </div>

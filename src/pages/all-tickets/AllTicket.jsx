@@ -43,7 +43,7 @@ const AllTicket = () => {
 
   const handleTransport = (e) => {
     const transport = e.target.value;
-    console.log(transport);
+
     setFilterTransport(transport);
   };
   const handleSort = (e) => {

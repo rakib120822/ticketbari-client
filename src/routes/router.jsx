@@ -24,11 +24,14 @@ import AdminUsersManage from "../pages/dashboard/user-manage/AdminUserManage";
 import VendorRoutes from "./VendorRoutes";
 import AdminRoutes from "./AdminRoutes";
 import DashboardHome from "../pages/dashbaordLandingPage/DashboardLandingPage";
+import ErrorPage from "../pages/errorpage/ErrorPage";
+import Loader from "../component/spinner/Loader";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    hydrateFallbackElement: <Loader/>,
     children: [
       {
         index: true,
@@ -78,6 +81,7 @@ const router = createBrowserRouter([
         <DashboardLayout />
       </PrivateRoutes>
     ),
+    hydrateFallbackElement: <Loader/>,
     children: [
       {
         index: true,
@@ -152,6 +156,10 @@ const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 

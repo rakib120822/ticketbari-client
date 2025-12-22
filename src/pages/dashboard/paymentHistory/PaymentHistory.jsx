@@ -27,7 +27,7 @@ const PaymentHistory = () => {
     );
   }
 
-  console.log("this is payemnt history : ", payments);
+
 
   return (
     <div className="p-4">

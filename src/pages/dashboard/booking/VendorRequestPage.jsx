@@ -22,7 +22,7 @@ const VendorRequestPage = () => {
   const handleAction = async (id, action) => {
     try {
       const res = await axiosSecure.patch(`/booking/${id}?status=${action}`);
-      console.log("this is modifided respponse : ", res);
+
       if (res.data.modifiedCount) {
         toast.info(`successfully ${action}`);
         // Refresh data after action

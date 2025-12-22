@@ -17,7 +17,7 @@ const AdminAdvertisePage = () => {
     queryKey: ["adminTickets"],
     queryFn: async () => {
       const res = await axiosSecure.get("/ticket?adminApproved=approve");
-      return res.data;
+      return res.data.tickets;
     },
   });
 

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../hook/useAxiosSecure";
 import useAuth from "../../hook/useAuth";
+import { toast } from "react-toastify";
 
 const AddTicket = () => {
   const { register, handleSubmit } = useForm();
@@ -8,10 +9,10 @@ const AddTicket = () => {
   const { user } = useAuth();
 
   const handleAddTicket = async (data) => {
-    console.log("added ticket form data : ", data);
     const res = await axiosSecure.post("/ticket", data);
-    console.log("add tickter : ", res);
-    alert("ticket added");
+    if (res.data.insertedId) {
+      toast.info("ticket added");
+    }
   };
   return (
     <div className="my-10">

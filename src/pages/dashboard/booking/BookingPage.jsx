@@ -7,7 +7,6 @@ import Loader from "../../../component/spinner/Loader";
 
 const BookingPage = () => {
   const { user } = useAuth();
-  console.log(user);
   const axiosSecure = useAxiosSecure();
   const { isLoading, data: tickets = [] } = useQuery({
     queryKey: ["tickets", user?.email],
