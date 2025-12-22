@@ -13,6 +13,7 @@ import { FaUserCog } from "react-icons/fa";
 import useRole from "../../hook/useRole";
 import useAuth from "../../hook/useAuth";
 import Loader from "../../component/spinner/Loader";
+import Navbar from "../../utils/Navbar";
 
 const DashboardLayout = () => {
   const { data: userRole, isLoading } = useRole();
@@ -50,7 +51,9 @@ const DashboardLayout = () => {
                 <path d="M14 10l2 2l-2 2"></path>
               </svg>
             </label>
-            <div className="px-4">Navbar Title</div>
+            <div className="px-4">
+              <Navbar />
+            </div>
           </nav>
           {/* Page content here */}
           <div className="p-4">
