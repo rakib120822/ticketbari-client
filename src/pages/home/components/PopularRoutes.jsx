@@ -24,7 +24,7 @@ const PopularRoutes = () => {
           {tickets.map((route) => (
             <div
               key={route.ticketTitle}
-              className=" bg-gray-100 px-4 py-2 rounded mr-5"
+              className=" bg-gray-100  px-4 py-2 rounded mr-5 dark:bg-gray-900 dark:text-white"
             >
               <p className="font-semibold">
                 {route.from} → {route.to}
