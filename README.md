@@ -1,16 +1,84 @@
-# React + Vite
+# Online Ticket Booking Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An **Online Ticket Booking Platform** built with the **MERN stack** (MongoDB, Express, React, Node.js) where users can discover, browse, and book travel tickets (Bus, Train, Launch, Plane, etc.). The platform supports three roles: **User**, **Vendor**, and **Admin**.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Folder Structure](#folder-structure)
+- [Dependencies](#dependencies)
+- [License](#license)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Project Overview
 
-## Expanding the ESLint configuration
+This platform allows:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Users** to browse, filter, and book tickets.
+- **Vendors** to create and manage their tickets.
+- **Admins** to approve or reject tickets and manage users.
+
+The platform includes features like:
+
+- Sorting, filtering, and pagination of tickets.
+- Popular routes marquee.
+- Infinite scroll for ticket listings.
+- Dark/Light mode support.
+- Real-time updates using React Query.
+- Charts for analytics (popular routes, ticket sales).
+- Google authentication via Firebase.
+
+---
+
+## Features
+
+### User
+
+- Browse available tickets.
+- Filter by transport type, price, and date.
+- Book tickets.
+- View popular routes.
+
+### Vendor
+
+- Add, update, and delete tickets.
+- View ticket bookings.
+
+### Admin
+
+- Approve or reject tickets.
+- Manage users and vendors.
+- View analytics dashboards.
+
+---
+
+## Technology Stack
+
+- **Frontend:** React.js, Tailwind CSS, DaisyUI, React Query, React Hook Form, Swiper, Recharts
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Authentication:** Firebase (Google Sign-In)
+- **Notifications:** React Toastify
+- **Icons:** React Icons
+- **Carousel/Marquee:** React Fast Marquee & Swiper
+
+---
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone <your-repo-url>
+cd online-ticket-booking
+
+
+
+
+
+```
