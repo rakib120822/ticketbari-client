@@ -57,6 +57,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-10">
+      <title>Login</title>
       <div className="max-w-md w-full p-8 bg-white rounded shadow">
         <h2 className="text-4xl font-bold mb-6 text-center text-primary">
           Login

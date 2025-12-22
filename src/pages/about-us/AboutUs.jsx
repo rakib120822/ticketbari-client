@@ -4,6 +4,7 @@ const AboutUs = () => {
   const [learnMore, setLearnMore] = useState(false);
   return (
     <section className="py-16  px-10">
+      <title>About Us</title>
       <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center gap-8">
         {/* Image */}
         <div className="flex-1">

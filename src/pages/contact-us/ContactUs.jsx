@@ -9,6 +9,7 @@ const ContactUs = () => {
   };
   return (
     <section className="py-16 ">
+      <title>Contact Us</title>
       <div className="container mx-auto px-4 max-w-4xl">
         <h2 className="text-3xl font-bold mb-6 text-center">
           Contact <span className="text-primary">Us</span>

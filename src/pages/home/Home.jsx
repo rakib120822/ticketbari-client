@@ -9,6 +9,7 @@ import PopularRoutes from "./components/PopularRoutes";
 const Home = () => {
   return (
     <div>
+      <title>Home</title>
       <HeroSlider />
       <AdvertisementSection />
       <LatestSection />

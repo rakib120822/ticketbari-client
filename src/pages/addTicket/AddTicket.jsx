@@ -16,6 +16,7 @@ const AddTicket = () => {
   };
   return (
     <div className="my-10">
+      <title>Add Ticket</title>
       <form
         onSubmit={handleSubmit(handleAddTicket)}
         className="max-w-xl mx-auto p-6 bg-base-200 rounded-lg shadow-lg space-y-4"
