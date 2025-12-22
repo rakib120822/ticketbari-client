@@ -1,42 +1,66 @@
 import React from "react";
 import LatestCard from "../../component/card/LatestCard";
-import useAxiosSecure from "../../hook/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useEffect } from "react";
+import useAxios from "../../hook/useAxios";
+import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa6";
 
 const AllTicket = () => {
-  const axiosSecure = useAxiosSecure();
+  const axiosInstance = useAxios();
   const [tickets, setTickets] = useState();
-  const { data } = useQuery({
-    queryKey: ["tickets", "alltickets"],
-    queryFn: async () => {
-      const res = await axiosSecure.get("/ticket");
-      setTickets(res.data);
-      return res.data;
-    },
-  });
+  const [sortOrder, setSortOrder] = useState("");
+  const [filterTransport, setFilterTransport] = useState("");
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  // const { data } = useQuery({
+  //   queryKey: ["tickets", "alltickets",],
+  //   queryFn: async () => {
+  //     const res = await axiosSecure.get("/ticket");
+  //     setTickets(res.data);
+  //     return res.data;
+  //   },
+  // });
+
+  const limit = 10; // Number of tickets per page
+  useEffect(() => {
+    const fetchTickets = async () => {
+      try {
+        const res = await axiosInstance.get(
+          `/ticket?limit=${limit}&skip=${
+            currentPage * limit
+          }&adminApproved=approve&sort=${sortOrder}&transportType=${filterTransport}`
+        );
+        setTickets(res.data.tickets);
+        const pages = Math.ceil(res.data.totalCount / limit);
+        setTotalPages(pages);
+      } catch (error) {
+        console.error("Error fetching tickets:", error);
+      }
+    };
+    fetchTickets();
+  }, [axiosInstance, currentPage, sortOrder, filterTransport]);
 
   const handleTransport = (e) => {
-    console.log(e.target.value);
     const transport = e.target.value;
-    setTickets(data.filter((c) => c.transportType === transport));
+    console.log(transport);
+    setFilterTransport(transport);
   };
   const handleSort = (e) => {
     const order = e.target.value;
 
     if (order === "high") {
       // High to Low
-      const sorted = [...data].sort((a, b) => b.price - a.price);
-      setTickets(sorted);
+      setSortOrder("desc");
     } else if (order === "low") {
       // Low to High
-      const sorted = [...data].sort((a, b) => a.price - b.price);
-      setTickets(sorted);
+      setSortOrder("asc");
     }
   };
 
   return (
     <div className="px-10 mb-10">
+      <p>total ticket : {tickets?.length}</p>
       <div className="flex flex-col mb-5 md:mb-0 md:flex-row justify-between items-center">
         <h1 className="text-4xl font-bold my-10 text-center">
           All <span className="text-primary">Tickets</span>
@@ -68,6 +92,45 @@ const AllTicket = () => {
         {tickets?.map((data) => (
           <LatestCard key={data._id} data={data} />
         ))}
+      </div>
+      <div className="flex flex-wrap justify-center gap-5 my-10">
+        {currentPage === 0 ? (
+          <button disabled className="btn btn-sm opacity-50 cursor-not-allowed">
+            <FaArrowLeft />
+            <span>prev</span>{" "}
+          </button>
+        ) : (
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className="btn btn-sm flex items-center justify-center gap-2"
+          >
+            <FaArrowLeft />
+            <span>prev</span>{" "}
+          </button>
+        )}
+        {[...Array(totalPages).keys()].map((number) => (
+          <button
+            onClick={() => setCurrentPage(number)}
+            className={`btn btn-sm ${
+              currentPage === number ? "btn-primary text-white" : ""
+            }`}
+            key={number}
+          >
+            {number + 1}
+          </button>
+        ))}
+        {currentPage >= totalPages - 1 ? (
+          <button disabled className="btn btn-sm opacity-50 cursor-not-allowed">
+            <span>Next</span> <FaArrowRight />
+          </button>
+        ) : (
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className="btn btn-sm"
+          >
+            <span>Next</span> <FaArrowRight />
+          </button>
+        )}
       </div>
     </div>
   );
