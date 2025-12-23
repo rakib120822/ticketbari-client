@@ -68,7 +68,7 @@ const DetailsPage = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow my-10">
+    <div className="max-w-3xl mx-auto p-6 border border-primary rounded shadow my-10">
       <img
         src={ticket.image}
         alt={ticket.ticketTitle}

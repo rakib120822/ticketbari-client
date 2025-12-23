@@ -41,7 +41,7 @@ const AdminTicketManage = () => {
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">🎟️ Manage Tickets</h2>
 
-      <div className="overflow-x-auto bg-white rounded-xl shadow">
+      <div className="overflow-x-auto  rounded-xl shadow">
         <table className="table table-zebra">
           <thead className="bg-base-200">
             <tr>
