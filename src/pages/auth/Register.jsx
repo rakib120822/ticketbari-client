@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import useAuth from "../../hook/useAuth";
 import { toast } from "react-toastify";
-import useAxiosSecure from "../../hook/useAxiosSecure";
+
 import axios from "axios";
+import useAxios from "../../hook/useAxios";
 
 const Register = () => {
   const {
@@ -16,7 +17,7 @@ const Register = () => {
     useAuth();
 
   const navigate = useNavigate();
-  const axiosSecure = useAxiosSecure();
+  const axiosInstance = useAxios();
 
   const handleFormSubmit = (data) => {
     const { name, email, password, photoUrl } = data;
@@ -34,7 +35,7 @@ const Register = () => {
           const url = res.data.data.display_url;
           updateProfileInfo(name, url).then(() => {
             setUser({ ...result.user });
-            axiosSecure.post("/user", result.user).then((res) => {
+            axios.post("/user", result.user).then((res) => {
               if (res.data.insertedId) {
                 navigate(`${location?.state || "/"}`);
                 toast.info("Register Done");
@@ -57,7 +58,7 @@ const Register = () => {
       setUser(user);
 
       // Save user to backend
-      const data = await axiosSecure.post("/user", user);
+      const data = await axiosInstance.post("/user", user);
       if (data.data.insertedId) {
         toast.info("Registration completed");
       }

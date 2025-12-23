@@ -3,7 +3,8 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../hook/useAuth";
 import { toast } from "react-toastify";
-import useAxiosSEcure from "../../hook/useAxiosSecure";
+import useAxios from "../../hook/useAxios";
+
 
 const Login = () => {
   const {
@@ -14,7 +15,7 @@ const Login = () => {
   const { logIn, setUser, setLoading, googleSignIn } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const axiosSecure = useAxiosSEcure();
+  const axiosInstance = useAxios();
 
   const handleLogin = (data) => {
 
@@ -42,7 +43,7 @@ const Login = () => {
 
 
       // Save user to backend
-      const data = await axiosSecure.post("/user", user);
+      const data = await axiosInstance.post("/user", user);
       if (data.data.insertedId) {
         toast.info("Registration completed");
       }
