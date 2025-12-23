@@ -75,9 +75,9 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 py-10">
+    <div className="min-h-screen flex items-center justify-center  py-10">
       <title>Register</title>
-      <div className="max-w-md w-full p-8 bg-white rounded shadow">
+      <div className="max-w-md w-full p-8 border border-primary rounded shadow">
         <h2 className="text-4xl font-bold mb-6 text-center text-primary">
           Register
         </h2>

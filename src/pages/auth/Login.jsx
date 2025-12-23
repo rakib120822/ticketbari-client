@@ -60,9 +60,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 py-10">
+    <div className="min-h-screen flex items-center justify-center  py-10">
       <title>Login</title>
-      <div className="max-w-md w-full p-8 bg-white rounded shadow">
+      <div className="max-w-md w-full p-8  rounded shadow border border-primary">
         <h2 className="text-4xl font-bold mb-6 text-center text-primary">
           Login
         </h2>
@@ -75,7 +75,7 @@ const Login = () => {
               type="email"
               name="email"
               placeholder="you@example.com"
-              className="w-full border border-gray-300 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border  px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               {...register("email", { required: true })}
             />
             {errors.email?.type === "required" && (
