@@ -16,6 +16,7 @@ const Card = ({ ticket }) => {
 
   // Countdown logic
   const [countdown, setCountdown] = useState("");
+  const [isExpired, setIsExpired] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -25,6 +26,7 @@ const Card = ({ ticket }) => {
 
       if (diff <= 0) {
         setCountdown("Departed");
+        setIsExpired(true);
         clearInterval(interval);
         return;
       }
@@ -34,6 +36,7 @@ const Card = ({ ticket }) => {
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
 
       setCountdown(`${days}d ${hours}h ${minutes}m`);
+      setIsExpired(false);
     }, 1000);
 
     return () => clearInterval(interval);
@@ -96,7 +99,7 @@ const Card = ({ ticket }) => {
           status === "paid" ? (
             <span className={`badge ${statusColor[status]}`}>{status}</span>
           ) : (
-            <button onClick={handlePayment} className="btn btn-primary">
+            <button disabled={isExpired} onClick={handlePayment} className="btn btn-primary">
               Pay Now
             </button>
           )}
