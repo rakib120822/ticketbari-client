@@ -94,7 +94,7 @@ const DashboardHome = () => {
           </div>
           <div className="stat-title">Total Spent</div>
           <div className="stat-value text-secondary">
-            $ {cost[0]?.totalPrice}
+            $ {cost[0]?.totalPrice || 0}
           </div>
           <div className="stat-desc">Includes pending payments</div>
         </div>

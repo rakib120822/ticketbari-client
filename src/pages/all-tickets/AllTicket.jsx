@@ -61,7 +61,7 @@ const AllTicket = () => {
   return (
     <div className="px-10 mb-10">
       <title>All Tickets</title>
-      <p>total ticket : {tickets?.length}</p>
+      
       <div className="flex flex-col mb-5 md:mb-0 md:flex-row justify-between items-center">
         <h1 className="text-4xl font-bold my-10 text-center">
           All <span className="text-primary">Tickets</span>

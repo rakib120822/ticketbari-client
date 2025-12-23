@@ -18,13 +18,17 @@ const Login = () => {
 
   const handleLogin = (data) => {
 
-    setLoading(true);
+  try{
+      setLoading(true);
     logIn(data.email, data.password).then((res) => {
       setUser(res.user);
       setLoading(false);
       toast.info("Successfully Logged In");
       navigate(`${location?.state || "/"}`);
     });
+  }catch(error){
+    toast.error("Login failed. Please check your credentials.",error.message);
+  }
   };
 
   const handleGoogleSignIn = async () => {

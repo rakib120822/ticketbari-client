@@ -35,7 +35,7 @@ const Navbar = () => {
       </li>
       {userInfo?.role === "vendor" ? (
         <li>
-          <NavLink to={"/add-ticket"}>Add Ticket</NavLink>
+          <NavLink to={"/dashboard/add-ticket"}>Add Ticket</NavLink>
         </li>
       ) : (
         ""
