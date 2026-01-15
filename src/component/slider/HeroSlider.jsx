@@ -1,12 +1,7 @@
 // HeroSectionEffect.jsx
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Autoplay,
-  Pagination,
-
-  EffectCoverflow,
-} from "swiper/modules";
+import { Autoplay, Pagination, EffectCoverflow } from "swiper/modules";
 import { Typewriter } from "react-simple-typewriter";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -26,7 +21,7 @@ const slides = [
 
 const HeroSection = () => {
   return (
-    <section className="w-full h-96 flex flex-col lg:flex-row py-16 px-10 ">
+    <section className="w-full h-150 lg:h-96 flex flex-col-reverse gap-10 lg:flex-row py-16 px-10 ">
       {/* Left Side: Typewriter Text */}
       <div className=" w-2/5 flex-col justify-center items-center h-full    ">
         <h1 className="text-4xl md:text-5xl font-bold mb-6 text-primary">

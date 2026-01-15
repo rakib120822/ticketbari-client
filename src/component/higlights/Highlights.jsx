@@ -10,7 +10,7 @@ const highlightsData = [
 const Highlights = () => {
   return (
     <section className="py-16  px-10">
-      <div className="container mx-auto text-center space-y-12">
+      <div className=" text-center space-y-12">
         <h2 className="text-4xl mb-12 font-bold">
           Why <span className="text-primary">Choose Us</span>
         </h2>

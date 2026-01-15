@@ -11,7 +11,7 @@ const blogs = [
 const Blogs = () => {
   return (
     <section className="py-16 px-10">
-      <div className="container mx-auto text-center">
+      <div className=" text-center">
         <h2 className="text-4xl font-bold mb-12">
           Latest <span className="text-primary">Blogs</span>
         </h2>
