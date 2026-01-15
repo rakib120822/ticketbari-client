@@ -65,8 +65,7 @@ const DetailsPage = () => {
         modalRef.current.close();
       }
     } catch (error) {
-      toast.error("Booking failed!", error);
-      console.log(error);
+      toast.error("Booking failed! Please login", error);
     }
   };
 
