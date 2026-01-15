@@ -27,6 +27,7 @@ import DashboardHome from "../pages/dashbaordLandingPage/DashboardLandingPage";
 import ErrorPage from "../pages/errorpage/ErrorPage";
 import Loader from "../component/spinner/Loader";
 import Skeleton from "../component/spinner/Skeleton";
+import BlogDetail from "../pages/blogPage/BlogDetails";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "details/:id",
         element: <DetailsPage />,
+      },
+      {
+        path: "blog/:blogId",
+        element: <BlogDetail />,
       },
     ],
   },

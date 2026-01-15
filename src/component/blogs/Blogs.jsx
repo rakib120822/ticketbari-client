@@ -1,10 +1,11 @@
 // Blogs.jsx
 import React from "react";
+import { Link } from "react-router";
 
 const blogs = [
-  { title: "Top 10 Travel Destinations", date: "Jan 10, 2026" },
-  { title: "How to Save on Tickets", date: "Feb 2, 2026" },
-  { title: "Traveling Safely in 2026", date: "Mar 5, 2026" },
+  { id: 1, title: "Top 10 Travel Destinations", date: "Jan 10, 2026" },
+  { id: 2, title: "How to Save on Tickets", date: "Feb 2, 2026" },
+  { id: 3, title: "Traveling Safely in 2026", date: "Mar 5, 2026" },
 ];
 
 const Blogs = () => {
@@ -22,7 +23,9 @@ const Blogs = () => {
             >
               <h3 className="text-xl font-bold mb-2">{blog.title}</h3>
               <p className="text-gray-500 text-sm">{blog.date}</p>
-              <button className="mt-4 btn btn-sm btn-primary">Read More</button>
+              <Link to={`blog/${idx}`} className="mt-4 btn btn-sm btn-primary">
+                Read More
+              </Link>
             </div>
           ))}
         </div>

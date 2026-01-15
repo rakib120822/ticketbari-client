@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import {
   Autoplay,
   Pagination,
-  EffectFade,
+
   EffectCoverflow,
 } from "swiper/modules";
 import { Typewriter } from "react-simple-typewriter";
@@ -26,9 +26,9 @@ const slides = [
 
 const HeroSection = () => {
   return (
-    <section className="w-full h-96 flex flex-col lg:flex-row py-16">
+    <section className="w-full h-96 flex flex-col lg:flex-row py-16 px-10 ">
       {/* Left Side: Typewriter Text */}
-      <div className=" w-2/5 flex-col justify-center items-start p-8 lg:p-20 ">
+      <div className=" w-2/5 flex-col justify-center items-center h-full    ">
         <h1 className="text-4xl md:text-5xl font-bold mb-6 text-primary">
           <Typewriter
             words={[
@@ -41,7 +41,7 @@ const HeroSection = () => {
             cursorStyle="|"
             typeSpeed={70}
             deleteSpeed={50}
-            delaySpeed={2000}
+            delaySpeed={500}
           />
         </h1>
         <p className="text-gray-600 text-lg md:text-xl mb-6">
@@ -57,7 +57,7 @@ const HeroSection = () => {
       </div>
 
       {/* Right Side: Swiper Slider with Fade Effect */}
-      <div className="lg:w-3/5 h-86 ">
+      <div className="lg:w-3/5 h-full ">
         <Swiper
           modules={[Autoplay, Pagination, EffectCoverflow]}
           effect="coverflow"
@@ -79,7 +79,7 @@ const HeroSection = () => {
           {slides.map((img, idx) => (
             <SwiperSlide key={idx}>
               <div
-                className="h-full  bg-cover bg-center transition-all duration-1000"
+                className="h-full  bg-cover bg-center transition-all duration-1000 rounded-4xl overflow-hidden"
                 style={{ backgroundImage: `url(${img})` }}
               ></div>
             </SwiperSlide>
