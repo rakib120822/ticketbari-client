@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 
 const axiosInstance = axios.create({
-  baseURL: "https://ticket-bari-server-nine.vercel.app",
+  baseURL: "http://localhost:3000",
 });
 
 function useAxios() {

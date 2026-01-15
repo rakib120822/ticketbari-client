@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import LatestCard from "../../../component/card/LatestCard";
 import { useQuery } from "@tanstack/react-query";
 
 import useAxios from "../../../hook/useAxios";
 
+import Skeleton from "../../../component/spinner/Skeleton";
+
 const AdvertisementSection = () => {
+  const [loading, setLoading] = useState(false);
   const axiosInstance = useAxios();
   const { data: tickets = [] } = useQuery({
     queryKey: ["tickets", "advertisment"],
     queryFn: async () => {
+      setLoading(true);
       const res = await axiosInstance.get("/ticket-advertise");
+      setLoading(false);
       return res.data;
     },
   });
+
+  if (loading) {
+    return <Skeleton />;
+  }
 
   return (
     <div className="px-10">

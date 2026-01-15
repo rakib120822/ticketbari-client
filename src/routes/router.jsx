@@ -26,12 +26,12 @@ import AdminRoutes from "./AdminRoutes";
 import DashboardHome from "../pages/dashbaordLandingPage/DashboardLandingPage";
 import ErrorPage from "../pages/errorpage/ErrorPage";
 import Loader from "../component/spinner/Loader";
+import Skeleton from "../component/spinner/Skeleton";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
-    hydrateFallbackElement: <Loader/>,
     children: [
       {
         index: true,
@@ -52,11 +52,7 @@ const router = createBrowserRouter([
 
       {
         path: "details/:id",
-        element: (
-          <PrivateRoutes>
-            <DetailsPage />
-          </PrivateRoutes>
-        ),
+        element: <DetailsPage />,
       },
     ],
   },
@@ -81,7 +77,7 @@ const router = createBrowserRouter([
         <DashboardLayout />
       </PrivateRoutes>
     ),
-    hydrateFallbackElement: <Loader/>,
+    hydrateFallbackElement: <Loader />,
     children: [
       {
         index: true,
