@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import useAxios from "../../hook/useAxios";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa6";
+import Skeleton from "../../component/spinner/Skeleton";
+
 
 const AllTicket = () => {
   const axiosInstance = useAxios();
@@ -13,6 +15,7 @@ const AllTicket = () => {
   const [filterTransport, setFilterTransport] = useState("");
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [loading, setLoading] = useState(false);
   // const { data } = useQuery({
   //   queryKey: ["tickets", "alltickets",],
   //   queryFn: async () => {
@@ -26,12 +29,14 @@ const AllTicket = () => {
   useEffect(() => {
     const fetchTickets = async () => {
       try {
+        setLoading(true);
         const res = await axiosInstance.get(
           `/ticket?limit=${limit}&skip=${
             currentPage * limit
           }&adminApproved=approve&sort=${sortOrder}&transportType=${filterTransport}`
         );
         setTickets(res.data.tickets);
+        setLoading(false);
         const pages = Math.ceil(res.data.totalCount / limit);
         setTotalPages(pages);
       } catch (error) {
@@ -58,10 +63,14 @@ const AllTicket = () => {
     }
   };
 
+  if (loading) {
+    return <Skeleton />;
+  }
+
   return (
     <div className="px-10 mb-10">
       <title>All Tickets</title>
-      
+
       <div className="flex flex-col mb-5 md:mb-0 md:flex-row justify-between items-center">
         <h1 className="text-4xl font-bold my-10 text-center">
           All <span className="text-primary">Tickets</span>

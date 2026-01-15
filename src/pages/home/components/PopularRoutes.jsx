@@ -15,8 +15,8 @@ const PopularRoutes = () => {
     },
   });
   return (
-    <div className="px-10 mb-10">
-      <h1 className="text-4xl font-bold my-10 text-center">
+    <div className="px-10 py-16">
+      <h1 className="text-4xl font-bold mb-12 text-center">
         Popular <span className="text-primary">Route</span>
       </h1>
       <div className="flex overflow-x-auto space-x-4">

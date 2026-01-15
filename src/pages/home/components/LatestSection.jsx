@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import useAxios from "../../../hook/useAxios";
 import Loader from "../../../component/spinner/Loader";
+import Skeleton from "../../../component/spinner/Skeleton";
 
 const LatestSection = () => {
   const axiosInstance = useAxios();
@@ -17,13 +18,13 @@ const LatestSection = () => {
   });
 
   if (isLoading) {
-    return <Loader />;
+    return <Skeleton />;
   }
 
 
   return (
-    <div className="px-10">
-      <h1 className="text-4xl font-bold my-10 text-center">
+    <div className="px-10 py-16">
+      <h1 className="text-4xl font-bold mb-12 text-center">
         Latest <span className="text-primary">Section</span>
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">

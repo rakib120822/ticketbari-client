@@ -1,18 +1,22 @@
 @import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
 
 @plugin "daisyui" {
-  themes: ["light", "dark"];
+  themes: [ "light", "dark"];
 }
 
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: #0ea5e9;  /* sky-500 */
+  --color-primary: #0ea5e9; /* sky-500 */
 }
 
 @plugin "daisyui/theme" {
   name: "dark";
   --color-primary: #0ea5e9;
+  --color-secondary: #fb7185;
 }
 
 /* Your custom active link style */
@@ -20,4 +24,3 @@ a.active {
   color: #0ea5e9;
   text-decoration: underline;
 }
-
